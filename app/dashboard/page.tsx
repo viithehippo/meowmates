@@ -42,12 +42,13 @@ export default function DashboardPage() {
     return null
   }
 
-  const filePath = `${user.id}/${type}.gif`
+  const fileExt = file.name.split('.').pop() || 'gif'
+  const filePath = `${user.id}/${type}-${Date.now()}.${fileExt}`
 
   const { error } = await supabase.storage
     .from('meowmates-assets')
     .upload(filePath, file, {
-      upsert: true,
+      upsert: false,
     })
 
   if (error) {
